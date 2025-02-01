@@ -1,0 +1,76 @@
+.App {
+  text-align: center;
+}
+
+.background {
+  height: 100%;
+  width: 100%;
+}
+
+.yumi {
+  top: 0;
+  left: 0;
+  height: 30%;
+}
+
+.questMessage {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: blue;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+}
+
+.controlUp {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  height: 100%;
+  font-size: 5rem;
+}
+
+.controlDown {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  height: 100%;
+  font-size: 5rem;
+}
+
+.controlLeft {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  height: 100%;
+  font-size: 5rem;
+}
+
+.controlRight {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  height: 100%;
+  font-size: 5rem;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
