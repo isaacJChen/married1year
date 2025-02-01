@@ -71,7 +71,7 @@ function App() {
         <img src={background} className="background" alt="background" />
         <q className='questMessage'>{questMessage}: {questPoints}</q>
         <img src={yumiImage} className='yumi' id='yumi' style={{'position': 'absolute', 'top': yumiPositionY, 'left': yumiPositionX, 'height': '30%'}}/>
-        <img src={pupu} className='quest' id='pupu' style={{'position': 'absolute', 'top': questPositionY, 'left': questPositionX, 'height': 150}}/>
+        <img src={pupu} className='quest' id='pupu' style={{'position': 'absolute', 'top': questPositionY, 'left': questPositionX, 'height': 150, 'display': questPoints == pupuGoal ? 'none' : ''}}/>
         <div className='controls'>
           <div className='controlsRow1'>
             <button className='controlUp' onClick={
