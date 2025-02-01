@@ -6,13 +6,14 @@ import { useState } from 'react';
 import './App.css';
 
 function App() {
+  const pupuGoal = 3;
   const [yumiPositionY, setYumiPositionY] = useState(0);
   const [yumiPositionX, setYumiPositionX] = useState(0);
   const [yumiImage, setYumiImage] = useState(yumi);
   const [questPositionY, setQuestPositionY] = useState(500);
   const [questPositionX, setQuestPositionX] = useState(500);
   const [questPoints, setQuestPoints] = useState(0);
-  const [questMessage, setQuestMessage] = useState('You are about to get married, but Pupu stole your wedding dress, catch 10 Pupus to get your dress back');
+  const [questMessage, setQuestMessage] = useState('You are about to get married, but Pupu stole your wedding dress, catch ' + pupuGoal + ' Pupus to get your dress back');
   const maxHeight = window.innerHeight - 200;
   const maxWidth = window.innerWidth - 200;
   const pupuRun = () => {
@@ -46,7 +47,7 @@ function App() {
     let yumiLeft = yumiPositionX;
     let yumiRight = yumiPositionX + yumiWidth;
     if (questPositionX >= yumiLeft && questPositionX <= yumiRight && questPositionY >= yumiTop && questPositionY <= yumiBottom) {
-      if (questPoints == 9) {
+      if (questPoints == pupuGoal - 1) {
         setYumiImage(yumi_dress);
       }
       let newHeight = Math.random() * maxHeight;
