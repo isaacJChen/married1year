@@ -46,15 +46,23 @@ function App() {
     let yumiTop = yumiPositionY;
     let yumiLeft = yumiPositionX;
     let yumiRight = yumiPositionX + yumiWidth;
-    if (questPositionX >= yumiLeft && questPositionX <= yumiRight && questPositionY >= yumiTop && questPositionY <= yumiBottom) {
+    let pupu = document.getElementById('pupu');
+    let offsetY = pupu.clientHeight / 2;
+    let offsetX = pupu.clientWidth / 2;
+    let questPositionXWithOffset = questPositionX + offsetX;
+    let questPositionYWithOffset = questPositionY + offsetY;
+    if (questPositionXWithOffset >= yumiLeft && questPositionXWithOffset <= yumiRight && questPositionYWithOffset >= yumiTop && questPositionYWithOffset <= yumiBottom) {
       if (questPoints == pupuGoal - 1) {
+        setQuestPoints(questPoints + 1);
         setYumiImage(yumi_dress);
+        setQuestMessage('Pupu is angwy and now throwing his poop at you! Dodge them until he runs out of poop: ');
+      } else if (questPoints < pupuGoal) {
+        let newHeight = Math.random() * maxHeight;
+        let newWidth = Math.random() * maxWidth;
+        setQuestPositionX(newWidth);
+        setQuestPositionY(newHeight);
+        setQuestPoints(questPoints + 1);
       }
-      let newHeight = Math.random() * maxHeight;
-      let newWidth = Math.random() * maxWidth;
-      setQuestPositionX(newWidth);
-      setQuestPositionY(newHeight);
-      setQuestPoints(questPoints + 1);
     }
   }
   return (
@@ -63,7 +71,7 @@ function App() {
         <img src={background} className="background" alt="background" />
         <q className='questMessage'>{questMessage}: {questPoints}</q>
         <img src={yumiImage} className='yumi' id='yumi' style={{'position': 'absolute', 'top': yumiPositionY, 'left': yumiPositionX, 'height': '30%'}}/>
-        <img src={pupu} className='quest' style={{'position': 'absolute', 'top': questPositionY, 'left': questPositionX, 'height': 150}}/>
+        <img src={pupu} className='quest' id='pupu' style={{'position': 'absolute', 'top': questPositionY, 'left': questPositionX, 'height': 150}}/>
         <div className='controls'>
           <div className='controlsRow1'>
             <button className='controlUp' onClick={
