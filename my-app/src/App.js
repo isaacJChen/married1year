@@ -6,6 +6,7 @@ import question_mark from './question_mark.png';
 import timmy from './timmy.png';
 import puzel from './puzel.png';
 import loopy from './loopy.png';
+import crowd from './crowd.jpg';
 import { useEffect, useState } from 'react';
 import './App.css';
 
@@ -21,6 +22,7 @@ function App() {
   const [timmyFound, setTimmyFound] = useState(false);
   const [puzelFound, setPuzelFound] = useState(false);
   const [loopyFound, setLoopyFound] = useState(false);
+  const [showCrowd, setShowCrowd] = useState(false);
   const maxHeight = window.innerHeight - 200;
   const maxWidth = window.innerWidth - 200;
 
@@ -70,7 +72,7 @@ function App() {
     hideAndSeekFound('puzel', setPuzelFound);
     hideAndSeekFound('loopy', setLoopyFound);
     if (loopyFound && timmyFound && puzelFound) {
-      setQuestMessage('You found all of the fwens but where is Isaac?');
+      setQuestMessage('You found all of the fwens but where is Isaac? Find Isaac in the crowd to recue him!');
     }
   }
 
@@ -117,7 +119,12 @@ function App() {
         <p style={{'position': 'absolute', 'top': '40%', 'left': '90%', 'display': loopyFound ? 'block' : 'none'}}>Haaah? What is happening?</p>
         <img src={timmyFound ? timmy : question_mark} className="hideAndSeek" id='timmy' style={{'position': 'absolute', 'top': '80%', 'left': '10%', 'height': '20%'}}/>
         <p style={{'position': 'absolute', 'top': '70%', 'left': '10%', 'display': timmyFound ? 'block' : 'none'}}>You found a bean toe! Kekeke!</p>
-        <q className='questMessage'>{questMessage} {questPoints === pupuGoal ? '' : ': ' + questPoints}</q>
+        <q className='questMessage'>
+          {questMessage} {questPoints === pupuGoal ? '' : ': ' + questPoints} 
+          <button style={{'display': puzelFound && timmyFound && loopyFound ? 'block' : 'none', 'position': 'absolute'}} onClick={() => {
+            setShowCrowd(true);
+          }}>Click me to find Isaac</button>
+        </q>
         <img src={yumiImage} className='yumi' id='yumi' style={{'position': 'absolute', 'top': yumiPositionY, 'left': yumiPositionX, 'height': '30%'}}/>
         <img src={pupu} className='quest' id='pupu' style={{'position': 'absolute', 'top': questPositionY, 'left': questPositionX, 'height': 150, 'display': questPoints === pupuGoal ? 'none' : ''}}/>
         <div className='controls'>
@@ -144,7 +151,7 @@ function App() {
               }
             }>⬇️</button>
 
-            <button className='controlRight'  onClick={
+            <button className='controlRight' onClick={
               () => {
                 setYumiPositionX(yumiPositionX + 50);
                 questInteraction();
@@ -152,6 +159,7 @@ function App() {
             }>➡️</button>
           </div>
         </div>
+        <img src={crowd} style={{'position': 'absolute', 'width': '100%', 'height': '95%', 'display': showCrowd ? 'block' : 'none', 'top': '5%'}}/>
       </header>
     </div>
   );
