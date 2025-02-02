@@ -2,6 +2,10 @@ import background from './court_room.jpg';
 import yumi from './yumi.png';
 import pupu from './pupu.png';
 import yumi_dress from './yumi_dress.png';
+import question_mark from './question_mark.png';
+import timmy from './timmy.png';
+import puzel from './puzel.png';
+import loopy from './loopy.png';
 import { useEffect, useState } from 'react';
 import './App.css';
 
@@ -14,6 +18,9 @@ function App() {
   const [questPositionX, setQuestPositionX] = useState(500);
   const [questPoints, setQuestPoints] = useState(0);
   const [questMessage, setQuestMessage] = useState('You are about to get married, but Pupu stole your wedding dress, catch ' + pupuGoal + ' Pupus to get your dress back');
+  const [timmyFound, setTimmyFound] = useState(false);
+  const [puzelFound, setPuzelFound] = useState(false);
+  const [loopyFound, setLoopyFound] = useState(false);
   const maxHeight = window.innerHeight - 200;
   const maxWidth = window.innerWidth - 200;
 
@@ -38,8 +45,39 @@ function App() {
       setQuestPositionY(newY);
     }
   }
+  const hideAndSeekFound = (fwenToFind, fwenFunction) => {
+    let yumi = document.getElementById('yumi');
+    let yumiHeight = yumi.clientHeight;
+    let yumiWidth = yumi.clientWidth;
+    let yumiBottom = yumiPositionY + yumiHeight;
+    let yumiTop = yumiPositionY;
+    let yumiLeft = yumiPositionX;
+    let yumiRight = yumiPositionX + yumiWidth;
+
+    let fwen = document.getElementById(fwenToFind);
+    let fwenOffsetY = fwen.clientHeight / 2;
+    let fwenOffsetX = fwen.clientWidth / 2;
+    let fwenPositionXWithOffset = fwen.getBoundingClientRect().left + fwenOffsetX;
+    let fwenPositionYWithOffset = fwen.getBoundingClientRect().top + fwenOffsetY;
+    if (fwenPositionXWithOffset >= yumiLeft && fwenPositionXWithOffset <= yumiRight && fwenPositionYWithOffset >= yumiTop && fwenPositionYWithOffset <= yumiBottom) {
+      fwenFunction(true);
+    }
+
+
+  }
+  const hideAndSeek = () => {
+    hideAndSeekFound('timmy', setTimmyFound);
+    hideAndSeekFound('puzel', setPuzelFound);
+    hideAndSeekFound('loopy', setLoopyFound);
+    if (loopyFound && timmyFound && puzelFound) {
+      setQuestMessage('You found all of the fwens but where is Isaac?');
+    }
+  }
+
   const questInteraction = () => {
-    pupuRun();
+    if (questPoints < pupuGoal) {
+      pupuRun();
+    }
     let yumi = document.getElementById('yumi');
     let yumiHeight = yumi.clientHeight;
     let yumiWidth = yumi.clientWidth;
@@ -56,7 +94,7 @@ function App() {
       if (questPoints === pupuGoal - 1) {
         setQuestPoints(questPoints + 1);
         setYumiImage(yumi_dress);
-        setQuestMessage('Pupu is angwy and now throwing his poop at you! Dodge them until he runs out of poop: ');
+        setQuestMessage('Yay! You got your dress back! But Isaac is playing hide and seek with his fwens, find all of them!');
       } else if (questPoints < pupuGoal) {
         let newHeight = Math.random() * maxHeight;
         let newWidth = Math.random() * maxWidth;
@@ -65,12 +103,21 @@ function App() {
         setQuestPoints(questPoints + 1);
       }
     }
+    if (questPoints === pupuGoal) {
+      hideAndSeek();
+    }
   }
   return (
     <div className="App">
       <header className="App-header">
         <img src={background} className="background" alt="background" />
-        <q className='questMessage'>{questMessage}: {questPoints}</q>
+        <img src={puzelFound ? puzel : question_mark} className="hideAndSeek" id='puzel' style={{'position': 'absolute', 'top': '70%', 'left': '45%', 'height': '20%'}}/>
+        <p style={{'position': 'absolute', 'top': '60%', 'left': '45%', 'display': puzelFound ? 'block' : 'none'}}>Aiya stupido Pupu always causing trouble!</p>
+        <img src={loopyFound ? loopy : question_mark} className="hideAndSeek" id='loopy' style={{'position': 'absolute', 'top': '50%', 'left': '90%', 'height': '20%'}}/>
+        <p style={{'position': 'absolute', 'top': '40%', 'left': '90%', 'display': loopyFound ? 'block' : 'none'}}>Haaah? What is happening?</p>
+        <img src={timmyFound ? timmy : question_mark} className="hideAndSeek" id='timmy' style={{'position': 'absolute', 'top': '80%', 'left': '10%', 'height': '20%'}}/>
+        <p style={{'position': 'absolute', 'top': '70%', 'left': '10%', 'display': timmyFound ? 'block' : 'none'}}>You found a bean toe! Kekeke!</p>
+        <q className='questMessage'>{questMessage} {questPoints === pupuGoal ? '' : ': ' + questPoints}</q>
         <img src={yumiImage} className='yumi' id='yumi' style={{'position': 'absolute', 'top': yumiPositionY, 'left': yumiPositionX, 'height': '30%'}}/>
         <img src={pupu} className='quest' id='pupu' style={{'position': 'absolute', 'top': questPositionY, 'left': questPositionX, 'height': 150, 'display': questPoints === pupuGoal ? 'none' : ''}}/>
         <div className='controls'>
