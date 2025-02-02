@@ -2,7 +2,7 @@ import background from './court_room.jpg';
 import yumi from './yumi.png';
 import pupu from './pupu.png';
 import yumi_dress from './yumi_dress.png';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
@@ -16,6 +16,7 @@ function App() {
   const [questMessage, setQuestMessage] = useState('You are about to get married, but Pupu stole your wedding dress, catch ' + pupuGoal + ' Pupus to get your dress back');
   const maxHeight = window.innerHeight - 200;
   const maxWidth = window.innerWidth - 200;
+
   const pupuRun = () => {
     let rng = Math.random();
     let newX = questPositionX;
@@ -52,7 +53,7 @@ function App() {
     let questPositionXWithOffset = questPositionX + offsetX;
     let questPositionYWithOffset = questPositionY + offsetY;
     if (questPositionXWithOffset >= yumiLeft && questPositionXWithOffset <= yumiRight && questPositionYWithOffset >= yumiTop && questPositionYWithOffset <= yumiBottom) {
-      if (questPoints == pupuGoal - 1) {
+      if (questPoints === pupuGoal - 1) {
         setQuestPoints(questPoints + 1);
         setYumiImage(yumi_dress);
         setQuestMessage('Pupu is angwy and now throwing his poop at you! Dodge them until he runs out of poop: ');
@@ -71,7 +72,7 @@ function App() {
         <img src={background} className="background" alt="background" />
         <q className='questMessage'>{questMessage}: {questPoints}</q>
         <img src={yumiImage} className='yumi' id='yumi' style={{'position': 'absolute', 'top': yumiPositionY, 'left': yumiPositionX, 'height': '30%'}}/>
-        <img src={pupu} className='quest' id='pupu' style={{'position': 'absolute', 'top': questPositionY, 'left': questPositionX, 'height': 150, 'display': questPoints == pupuGoal ? 'none' : ''}}/>
+        <img src={pupu} className='quest' id='pupu' style={{'position': 'absolute', 'top': questPositionY, 'left': questPositionX, 'height': 150, 'display': questPoints === pupuGoal ? 'none' : ''}}/>
         <div className='controls'>
           <div className='controlsRow1'>
             <button className='controlUp' onClick={
